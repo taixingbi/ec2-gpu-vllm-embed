@@ -217,7 +217,7 @@ jobs:
             fi
 
             echo "=== Deploy vLLM embeddings ==="
-            sudo docker compose pull
+            PULL_LOG=$(mktemp) && sudo docker compose pull -q 2>"$PULL_LOG" || { cat "$PULL_LOG"; rm -f "$PULL_LOG"; exit 1; }; rm -f "$PULL_LOG"
             sudo docker compose up -d
 
             echo "=== Waiting for vLLM embeddings (models may take 5-15 min to load) ==="
