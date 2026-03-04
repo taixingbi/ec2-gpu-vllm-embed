@@ -12,14 +12,16 @@ services:
     environment:
       - HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN:-}
     command:
+      - python3
+      - -m
+      - vllm.entrypoints.openai.api_server
+      - --model
       - BAAI/bge-large-en-v1.5
-      - --task
-      - embed
       - --host
       - 0.0.0.0
       - --port
       - "8000"
       - --dtype
-      - auto
+      - half
       - --gpu-memory-utilization
-      - "0.90"
+      - "0.85"
